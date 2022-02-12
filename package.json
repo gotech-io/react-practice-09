@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "npx json-server --watch db.json --port 3001 ",
+    "server": "npx json-server --watch db.json --port 3001",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },

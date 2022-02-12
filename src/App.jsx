@@ -1,11 +1,13 @@
 import { useContext } from 'react';
 import styled from '@emotion/styled/macro';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import Header from './Header';
 import ThemeToggle from './ThemeToggle';
 import ThemeProvider, { ThemeContext } from './themeContext';
 import ToDoListPage from './ToDoListPage';
 import ToDoItemPage from './ToDoItemPage';
+import store from './store';
 
 const Container = styled.div`
   position: relative;
@@ -18,9 +20,11 @@ const Container = styled.div`
 
 const ThemedApp = () => {
   return (
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </Provider>
   );
 };
 
