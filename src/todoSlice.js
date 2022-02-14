@@ -10,20 +10,14 @@ import api from './api';
 const todosAdapter = createEntityAdapter();
 
 // Initial state
-const initialState = todosAdapter.getInitialState({
-  status: 'idle',
-});
+const initialState = todosAdapter.getInitialState({});
 
 const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getTodos.pending, (state) => {
-      state.status = 'loading';
-    });
     builder.addCase(getTodos.fulfilled, (state, action) => {
-      state.status = 'idle';
       todosAdapter.setAll(state, action.payload);
     });
     builder.addCase(postNewTodo.fulfilled, (state, action) => {
@@ -57,8 +51,8 @@ const postNewTodo = createAsyncThunk('todos/postNewTodo', async (title) => {
 
 const patchTodo = createAsyncThunk(
   'todos/patchTodo',
-  async ({ id, isCompleted }) => {
-    return await api.updateItem(id, { isCompleted });
+  async ({ id, changes }) => {
+    return await api.updateItem(id, changes);
   }
 );
 
@@ -80,7 +74,7 @@ const selectFilteredTodos = createSelector(
       return todos;
     }
 
-    return todos.filter((todo) => todo.isCompleted);
+    return todos.filter((todo) => !todo.isCompleted);
   }
 );
 

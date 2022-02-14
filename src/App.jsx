@@ -8,6 +8,7 @@ import ThemeProvider, { ThemeContext } from './themeContext';
 import ToDoListPage from './ToDoListPage';
 import ToDoItemPage from './ToDoItemPage';
 import store from './store';
+import { getTodos } from './todoSlice';
 
 const Container = styled.div`
   position: relative;
@@ -27,6 +28,8 @@ const ThemedApp = () => {
     </Provider>
   );
 };
+
+store.dispatch(getTodos());
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
