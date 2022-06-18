@@ -26,7 +26,7 @@ const reducer = (state, action) => {
     case 'todo-updated':
       const newTodos = state.todos.map((todo) => {
         if (todo.id === action.payload.id) {
-          return { ...todo, isCompleted: action.payload.isCompleted };
+          return { ...todo, ...action.payload };
         }
         return todo;
       });
@@ -58,9 +58,9 @@ const FetchToDoList = ({ showCompleted }) => {
     dispatch({ type: 'filter-changed', payload: { showCompleted } });
   }, [showCompleted]);
 
-  const handleChange = async (id, newState) => {
-    await api.updateItem(id, { isCompleted: newState });
-    dispatch({ type: 'todo-updated', payload: { id, isCompleted: newState } });
+  const handleChange = async (id, changes) => {
+    await api.updateItem(id, changes);
+    dispatch({ type: 'todo-updated', payload: { id, ...changes } });
   };
 
   const handleAdd = async (title) => {
